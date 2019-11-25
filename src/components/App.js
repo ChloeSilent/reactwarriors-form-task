@@ -12,7 +12,7 @@ export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      show: "Contacts",
+      show: "Basic",
       firstName: "",
       lastName: "",
       password: "",
@@ -57,21 +57,7 @@ export default class App extends React.Component {
   };
 
   getOptionsCities = country => {
-    // let idCountry = countries.findIndex(land => land.name === country);
-
-    // console.log(idCountry);
-    // let allCitiesList = Object.values(cities);
-    // console.log(allCitiesList);
-    // let chosenCities = allCitiesList.filter(city => city.country === idCountry + 1);
-    //
-    // return (
-    //     chosenCities.map((city) => {
-    //         return <option  key={Object.keys(cities).find(key => cities[key] === city)}
-    //                        value={city.name}>{city.name}</option>;
-    //     })
-    // )
-
-    let idCountry = countries.find(land => land.name === country); //выбранная страна
+    let idCountry = countries.find(land => land.name === country);
     let allCitiesList = Object.values(cities);
     let chosenCities = allCitiesList.filter(
       city => city.country === idCountry.id
@@ -82,7 +68,6 @@ export default class App extends React.Component {
     }
     return chosenCities.map(city => {
       let key = getKeyByValue(cities, city);
-      console.log(key);
       return (
         <option key={key} value={city.name}>
           {city.name}
@@ -109,13 +94,13 @@ export default class App extends React.Component {
   onSubmitBasic = e => {
     e.preventDefault();
     const errors = {};
-    if (this.state.firstName.length < 5) {
+    if (this.state.firstName.length <= 5) {
       errors.firstName = "Must be 5 characters or more";
     }
-    if (this.state.lastName.length < 5) {
+    if (this.state.lastName.length <= 5) {
       errors.lastName = "Must be 5 characters or more";
     }
-    if (this.state.password.length < 1) {
+    if (this.state.password.length <= 6) {
       errors.password = "Must be 6 characters or more";
     }
     if (this.state.repeatPassword !== this.state.password) {
@@ -211,6 +196,7 @@ export default class App extends React.Component {
 
   onChange = e => {
     e.preventDefault();
+
     this.setState({
       [e.target.name]: e.target.value
     });

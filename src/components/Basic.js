@@ -15,7 +15,7 @@ const Basic = props => {
     errorGender,
     onSubmitBasic
   } = props;
-  console.log("errorFirstName ", typeof errorFirstName, errorFirstName);
+
   return (
     <Fragment>
       <div className="form-group">
