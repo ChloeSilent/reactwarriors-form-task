@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment } from 'react'
 
 const Basic = props => {
   const {
@@ -13,8 +13,8 @@ const Basic = props => {
     errorRepeatPassword,
     gender,
     errorGender,
-    onSubmitBasic
-  } = props;
+    onSubmitBasic,
+  } = props
 
   return (
     <Fragment>
@@ -22,7 +22,7 @@ const Basic = props => {
         <label htmlFor="firstName">First name</label>
         <input
           type="text"
-          className={errorFirstName ? "form-control invalid" : "form-control"}
+          className={errorFirstName ? 'form-control invalid' : 'form-control'}
           placeholder="Enter first name"
           name="firstName"
           value={firstName}
@@ -38,7 +38,7 @@ const Basic = props => {
         <label htmlFor="lastName">Last name</label>
         <input
           type="text"
-          className={errorLastName ? "form-control invalid" : "form-control"}
+          className={errorLastName ? 'form-control invalid' : 'form-control'}
           placeholder="Enter last name"
           name="lastName"
           id="lastName"
@@ -54,7 +54,7 @@ const Basic = props => {
         <label htmlFor="password">Password</label>
         <input
           type="password"
-          className={errorPassword ? "form-control invalid" : "form-control"}
+          className={errorPassword ? 'form-control invalid' : 'form-control'}
           placeholder="Enter password"
           name="password"
           id="password"
@@ -71,7 +71,7 @@ const Basic = props => {
         <input
           type="password"
           className={
-            errorRepeatPassword ? "form-control invalid" : "form-control"
+            errorRepeatPassword ? 'form-control invalid' : 'form-control'
           }
           placeholder="Enter repeat password"
           name="repeatPassword"
@@ -94,7 +94,7 @@ const Basic = props => {
             name="gender"
             value="male"
             onChange={onChange}
-            checked={gender === "male"}
+            checked={gender === 'male'}
           />
           <label className="form-check-label" htmlFor="male">
             Male
@@ -108,7 +108,7 @@ const Basic = props => {
             name="gender"
             value="female"
             onChange={onChange}
-            checked={gender === "female"}
+            checked={gender === 'female'}
           />
           <label className="form-check-label" htmlFor="female">
             Female
@@ -131,7 +131,7 @@ const Basic = props => {
         </button>
       </div>
     </Fragment>
-  );
-};
+  )
+}
 
-export default Basic;
+export default Basic
