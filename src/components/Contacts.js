@@ -1,5 +1,5 @@
-import React, { Fragment } from "react";
-import countries from "../data/countries";
+import React, { Fragment } from 'react'
+import countries from '../data/countries'
 
 const Contacts = props => {
   const {
@@ -14,16 +14,16 @@ const Contacts = props => {
     city,
     getOptionsCities,
     errorCity,
-    onPrevContact,
-    onSubmitContact
-  } = props;
+    //onPrevContact,
+    //onSubmitContact,
+  } = props
   return (
     <Fragment>
       <div className="form-group">
         <label htmlFor="email">Email</label>
         <input
           type="text"
-          className={errorEmail ? "form-control invalid" : "form-control"}
+          className={errorEmail ? 'form-control invalid' : 'form-control'}
           id="email"
           placeholder="Enter email"
           name="email"
@@ -38,7 +38,7 @@ const Contacts = props => {
         <label htmlFor="mobile">Mobile</label>
         <input
           type="tel"
-          className={errorMobile ? "form-control invalid" : "form-control"}
+          className={errorMobile ? 'form-control invalid' : 'form-control'}
           id="mobile"
           placeholder="Enter mobile"
           name="mobile"
@@ -53,7 +53,7 @@ const Contacts = props => {
       <div className="form-group">
         <label htmlFor="country">select country</label>
         <select
-          className={errorCountry ? "form-control invalid" : "form-control"}
+          className={errorCountry ? 'form-control invalid' : 'form-control'}
           id="country"
           value={country}
           name="country"
@@ -69,7 +69,7 @@ const Contacts = props => {
         <label htmlFor="country">select city</label>
 
         <select
-          className={errorCity ? "form-control invalid" : "form-control"}
+          className={errorCity ? 'form-control invalid' : 'form-control'}
           id="city"
           value={city}
           name="city"
@@ -81,24 +81,24 @@ const Contacts = props => {
           <div className="invalid-feedback">{errorCity}</div>
         ) : null}
       </div>
-      <div className="d-flex justify-content-center">
-        <button
-          type="button"
-          className="btn btn-light mr-4"
-          onClick={onPrevContact}
-        >
-          Previous
-        </button>
-        <button
-          type="button"
-          className="btn btn-secondary"
-          onClick={onSubmitContact}
-        >
-          Next
-        </button>
-      </div>
+      {/*<div className="d-flex justify-content-center">*/}
+      {/*  <button*/}
+      {/*    type="button"*/}
+      {/*    className="btn btn-light mr-4"*/}
+      {/*    onClick={onPrevContact}*/}
+      {/*  >*/}
+      {/*    Previous*/}
+      {/*  </button>*/}
+      {/*  <button*/}
+      {/*    type="button"*/}
+      {/*    className="btn btn-secondary"*/}
+      {/*    onClick={onSubmitContact}*/}
+      {/*  >*/}
+      {/*    Next*/}
+      {/*  </button>*/}
+      {/*</div>*/}
     </Fragment>
-  );
-};
+  )
+}
 
-export default Contacts;
+export default Contacts

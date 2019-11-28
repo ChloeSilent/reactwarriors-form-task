@@ -13,7 +13,7 @@ const Basic = props => {
     errorRepeatPassword,
     gender,
     errorGender,
-    onSubmitBasic,
+    //onSubmitBasic,
   } = props
 
   return (
@@ -118,18 +118,18 @@ const Basic = props => {
           <div className="invalid-feedback">{errorGender}</div>
         ) : null}
       </fieldset>
-      <div className="d-flex justify-content-center">
-        <button type="button" className="btn btn-light mr-4">
-          Previous
-        </button>
-        <button
-          type="button"
-          className="btn btn-secondary"
-          onClick={onSubmitBasic}
-        >
-          Next
-        </button>
-      </div>
+      {/*<div className="d-flex justify-content-center">*/}
+      {/*  <button type="button" className="btn btn-light mr-4">*/}
+      {/*    Previous*/}
+      {/*  </button>*/}
+      {/*  <button*/}
+      {/*    type="button"*/}
+      {/*    className="btn btn-secondary"*/}
+      {/*    onClick={onSubmitBasic}*/}
+      {/*  >*/}
+      {/*    Next*/}
+      {/*  </button>*/}
+      {/*</div>*/}
     </Fragment>
   )
 }

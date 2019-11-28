@@ -7,6 +7,10 @@ import Contacts from './Contacts'
 import Stages from './Stages'
 import Avatar from './Avatar'
 import Finish from './Finish'
+import Navigation from './Navigation'
+
+const regMail = /.+@.+\.[A-Za-z]+$/
+const regMobile = /^[(]?[0-9]{4}[)]?[-\s.]?[0-9]{3}[-/\s.]?[0-9]{4}$/
 
 export default class App extends React.Component {
   constructor() {
@@ -26,30 +30,31 @@ export default class App extends React.Component {
           'https://reactwarriors.github.io/reactwarriors-stage-2/static/media/default-avatar.59337bae.png',
       },
       currentStep: 1,
-      firstName: '',
-      lastName: '',
-      password: '',
-      repeatPassword: '',
-      gender: 'male',
       errorsBasic: {
         firstName: false,
         lastName: false,
         password: false,
         repeatPassword: false,
       },
-      email: '',
-      mobile: '',
-      country: 'Ukraine',
-      city: '',
       errorsContacts: {
         email: false,
         mobile: false,
         country: false,
         city: false,
       },
-      avatar:
-        'https://reactwarriors.github.io/reactwarriors-stage-2/static/media/default-avatar.59337bae.png',
       errorsAvatar: {
+        avatar: false,
+      },
+
+      errors: {
+        firstName: false,
+        lastName: false,
+        password: false,
+        repeatPassword: false,
+        email: false,
+        mobile: false,
+        country: false,
+        city: false,
         avatar: false,
       },
     }
@@ -100,6 +105,100 @@ export default class App extends React.Component {
     reader.readAsDataURL(e.target.files[0])
   }
 
+  checkErrors = e => {
+    e.preventDefault()
+    const errors = {}
+    console.log('this.state.currentStep ', this.state.currentStep)
+    switch (this.state.currentStep) {
+      case 1:
+        if (this.state.values.firstName.length <= 1) {
+          errors.firstName = 'Must be 5 characters or more'
+        }
+        if (this.state.values.lastName.length <= 1) {
+          errors.lastName = 'Must be 5 characters or more'
+        }
+        if (this.state.values.password.length <= 1) {
+          errors.password = 'Must be 6 characters or more'
+        }
+        if (this.state.values.repeatPassword !== this.state.values.password) {
+          errors.repeatPassword = 'Must be equal password'
+        }
+        if (!this.state.values.gender) {
+          errors.repeatPassword = 'Required'
+        }
+
+        if (Object.keys(errors).length > 0) {
+          this.setState({
+            errors: errors,
+          })
+        } else {
+          this.setState({
+            errors: {},
+            currentStep: 2,
+          })
+        }
+        break
+
+      case 2:
+        if (regMail.test(this.state.values.email) === false) {
+          errors.email = 'Invalid email address'
+        }
+        if (regMobile.test(this.state.values.mobile) === false) {
+          errors.mobile = 'Invalid mobile'
+        }
+        if (!this.state.values.country) {
+          errors.country = 'Required'
+        }
+        if (!this.state.values.city) {
+          errors.city = 'Required'
+        }
+
+        if (Object.keys(errors).length > 0) {
+          this.setState({ errorsContacts: errors })
+        } else {
+          this.setState({
+            errorsContacts: {},
+            currentStep: 3,
+          })
+        }
+        break
+      case 3:
+        if (
+          this.state.values.avatar ===
+          'https://reactwarriors.github.io/reactwarriors-stage-2/static/media/default-avatar.59337bae.png'
+        ) {
+          errors.avatar = 'Required'
+          this.setState({
+            errorsAvatar: errors,
+            currentStep: 4,
+          })
+        } else {
+          this.setState({
+            errorsAvatar: {},
+            currentStep: 4,
+          })
+        }
+        break
+    }
+  }
+
+  onPrevBtnClick = e => {
+    e.preventDefault()
+    console.log(this.state.currentStep)
+    switch (this.state.currentStep) {
+      case 2:
+        this.setState({
+          currentStep: 1,
+        })
+        break
+      case 3:
+        this.setState({
+          currentStep: 2,
+        })
+        break
+    }
+  }
+
   onReset = e => {
     e.preventDefault()
     window.location.reload(false)
@@ -138,8 +237,7 @@ export default class App extends React.Component {
     e.preventDefault()
 
     const errors = {}
-    let regMail = /.+@.+\.[A-Za-z]+$/
-    const regMobile = /^[(]?[0-9]{4}[)]?[-\s.]?[0-9]{3}[-/\s.]?[0-9]{4}$/
+
     if (regMail.test(this.state.values.email) === false) {
       errors.email = 'Invalid email address'
     }
@@ -227,33 +325,30 @@ export default class App extends React.Component {
             <Basic
               firstName={this.state.values.firstName}
               onChange={this.onChange}
-              errorFirstName={this.state.errorsBasic.firstName}
+              errorFirstName={this.state.errors.firstName}
               lastName={this.state.values.lastName}
-              errorLastName={this.state.errorsBasic.lastName}
+              errorLastName={this.state.errors.lastName}
               password={this.state.values.password}
-              errorPassword={this.state.errorsBasic.password}
+              errorPassword={this.state.errors.password}
               repeatPassword={this.state.values.repeatPassword}
-              errorRepeatPassword={this.state.errorsBasic.repeatPassword}
+              errorRepeatPassword={this.state.errors.repeatPassword}
               gender={this.state.values.gender}
-              errorGender={this.state.errorsBasic.gender}
-              onSubmitBasic={this.onSubmitBasic}
+              errorGender={this.state.errors.gender}
             />
           )}
           {this.state.currentStep === 2 && (
             <Contacts
               email={this.state.values.email}
               onChange={this.onChange}
-              errorEmail={this.state.errorsContacts.email}
+              errorEmail={this.state.errors.email}
               mobile={this.state.values.mobile}
-              errorMobile={this.state.errorsContacts.mobile}
+              errorMobile={this.state.errors.mobile}
               country={this.state.values.country}
               getOptionsItems={this.getOptionsItems}
-              errorCountry={this.state.errorsContacts.country}
+              errorCountry={this.state.errors.country}
               city={this.state.values.city}
-              errorCity={this.state.errorsContacts.city}
+              errorCity={this.state.errors.city}
               getOptionsCities={this.getOptionsCities}
-              onPrevContact={this.onPrevContact}
-              onSubmitContact={this.onSubmitContact}
             />
           )}
           {this.state.currentStep === 3 && (
@@ -261,9 +356,7 @@ export default class App extends React.Component {
               avatar={this.state.values.avatar}
               firstName={this.state.values.firstName}
               onChangeAvatar={this.onChangeAvatar}
-              errorAvatar={this.state.errorsAvatar.avatar}
-              onSubmitAvatar={this.onSubmitAvatar}
-              onPrevAvatar={this.onPrevAvatar}
+              errorAvatar={this.state.errors.avatar}
             />
           )}
           {this.state.currentStep === 4 && (
@@ -275,9 +368,14 @@ export default class App extends React.Component {
               mobile={this.state.values.mobile}
               country={this.state.values.country}
               city={this.state.values.city}
-              onReset={this.onReset}
             />
           )}
+          <Navigation
+            state={this.state.currentStep}
+            next={this.checkErrors}
+            onPrevBtnClick={this.onPrevBtnClick}
+            onReset={this.onReset}
+          />
         </form>
       </div>
     )
