@@ -1,49 +1,45 @@
-import React from "react";
-import "./app.css";
-import countries from "../data/countries";
-import cities from "../data/cities";
-import Basic from "./Basic";
-import Contacts from "./Contacts";
-import Stages from "./Stages";
-import Avatar from "./Avatar";
-import Finish from "./Finish";
+import React from 'react'
+import './app.css'
+import countries from '../data/countries'
+import cities from '../data/cities'
+import Basic from './Basic'
+import Contacts from './Contacts'
+import Stages from './Stages'
+import Avatar from './Avatar'
+import Finish from './Finish'
 
 export default class App extends React.Component {
   constructor() {
-    super();
+    super()
     this.state = {
-      show: "Basic",
-      firstName: "",
-      lastName: "",
-      password: "",
-      repeatPassword: "",
-      gender: "male",
+      currentStep: 1,
+      firstName: '',
+      lastName: '',
+      password: '',
+      repeatPassword: '',
+      gender: 'male',
       errorsBasic: {
         firstName: false,
         lastName: false,
         password: false,
-        repeatPassword: false
+        repeatPassword: false,
       },
-      email: "",
-      mobile: "",
-      country: "Ukraine",
-      city: "",
+      email: '',
+      mobile: '',
+      country: 'Ukraine',
+      city: '',
       errorsContacts: {
         email: false,
         mobile: false,
         country: false,
-        city: false
+        city: false,
       },
       avatar:
-        "https://reactwarriors.github.io/reactwarriors-stage-2/static/media/default-avatar.59337bae.png",
+        'https://reactwarriors.github.io/reactwarriors-stage-2/static/media/default-avatar.59337bae.png',
       errorsAvatar: {
-        avatar: false
+        avatar: false,
       },
-      completeBasic: "step is-active",
-      completeContacts: "step",
-      completeAvatar: "step",
-      completeFinish: "step"
-    };
+    }
   }
 
   getOptionsItems = items => {
@@ -52,158 +48,148 @@ export default class App extends React.Component {
         <option key={item.id} value={item.name}>
           {item.name}
         </option>
-      );
-    });
-  };
+      )
+    })
+  }
 
   getOptionsCities = country => {
-    let idCountry = countries.find(land => land.name === country);
-    let allCitiesList = Object.values(cities);
+    let idCountry = countries.find(land => land.name === country)
+    let allCitiesList = Object.values(cities)
     let chosenCities = allCitiesList.filter(
       city => city.country === idCountry.id
-    );
+    )
 
     function getKeyByValue(object, value) {
-      return Object.keys(object).find(key => object[key] === value);
+      return Object.keys(object).find(key => object[key] === value)
     }
     return chosenCities.map(city => {
-      let key = getKeyByValue(cities, city);
+      let key = getKeyByValue(cities, city)
       return (
         <option key={key} value={city.name}>
           {city.name}
         </option>
-      );
-    });
-  };
+      )
+    })
+  }
 
   onChangeAvatar = e => {
-    const reader = new FileReader();
+    const reader = new FileReader()
     reader.onload = e => {
       this.setState({
-        avatar: e.target.result
-      });
-    };
-    reader.readAsDataURL(e.target.files[0]);
-  };
+        avatar: e.target.result,
+      })
+    }
+    reader.readAsDataURL(e.target.files[0])
+  }
 
   onReset = e => {
-    e.preventDefault();
-    window.location.reload(false);
-  };
+    e.preventDefault()
+    window.location.reload(false)
+  }
 
   onSubmitBasic = e => {
-    e.preventDefault();
-    const errors = {};
-    if (this.state.firstName.length <= 5) {
-      errors.firstName = "Must be 5 characters or more";
+    e.preventDefault()
+    const errors = {}
+    if (this.state.firstName.length <= 1) {
+      errors.firstName = 'Must be 5 characters or more'
     }
-    if (this.state.lastName.length <= 5) {
-      errors.lastName = "Must be 5 characters or more";
+    if (this.state.lastName.length <= 1) {
+      errors.lastName = 'Must be 5 characters or more'
     }
-    if (this.state.password.length <= 6) {
-      errors.password = "Must be 6 characters or more";
+    if (this.state.password.length <= 1) {
+      errors.password = 'Must be 6 characters or more'
     }
     if (this.state.repeatPassword !== this.state.password) {
-      errors.repeatPassword = "Must be equal password";
+      errors.repeatPassword = 'Must be equal password'
     }
     if (!this.state.gender) {
-      errors.repeatPassword = "Required";
+      errors.repeatPassword = 'Required'
     }
 
     if (Object.keys(errors).length > 0) {
-      this.setState({ errorsBasic: errors });
+      this.setState({ errorsBasic: errors })
     } else {
       this.setState({
         errorsBasic: {},
-        show: "Contacts",
-        completeBasic: "step is-completed",
-        completeContacts: "step is-active"
-      });
+        currentStep: 2,
+      })
     }
-  };
+  }
 
   onSubmitContact = e => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const errors = {};
-    let regMail = /.+@.+\.[A-Za-z]+$/;
-    const regMobile = /^[(]?[0-9]{4}[)]?[-\s.]?[0-9]{3}[-/\s.]?[0-9]{4}$/;
+    const errors = {}
+    let regMail = /.+@.+\.[A-Za-z]+$/
+    const regMobile = /^[(]?[0-9]{4}[)]?[-\s.]?[0-9]{3}[-/\s.]?[0-9]{4}$/
     if (regMail.test(this.state.email) === false) {
-      errors.email = "Invalid email address";
+      errors.email = 'Invalid email address'
     }
     if (regMobile.test(this.state.mobile) === false) {
-      errors.mobile = "Invalid mobile";
+      errors.mobile = 'Invalid mobile'
     }
     if (!this.state.country) {
-      errors.country = "Required";
+      errors.country = 'Required'
     }
     if (!this.state.city) {
-      errors.city = "Required";
+      errors.city = 'Required'
     }
 
     if (Object.keys(errors).length > 0) {
-      this.setState({ errorsContacts: errors });
+      this.setState({ errorsContacts: errors })
     } else {
       this.setState({
         errorsContacts: {},
-        show: "Avatar",
-        completeContacts: "step is-completed",
-        completeAvatar: "step is-active"
-      });
+        currentStep: 3,
+      })
     }
-  };
+  }
 
   onPrevContact = e => {
-    e.preventDefault();
+    e.preventDefault()
     this.setState({
-      show: "Basic",
-      completeContacts: "step",
-      completeBasic: "step is-active"
-    });
-  };
+      currentStep: 1,
+    })
+  }
 
   onSubmitAvatar = e => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const errors = {};
+    const errors = {}
 
     if (
       this.state.avatar ===
-      "https://reactwarriors.github.io/reactwarriors-stage-2/static/media/default-avatar.59337bae.png"
+      'https://reactwarriors.github.io/reactwarriors-stage-2/static/media/default-avatar.59337bae.png'
     ) {
-      errors.avatar = "Required";
+      errors.avatar = 'Required'
       this.setState({
         errorsAvatar: errors,
-        show: "Finish"
-      });
+        currentStep: 4,
+      })
     } else {
       this.setState({
         errorsAvatar: {},
-        show: "Finish",
-        completeAvatar: "step is-completed",
-        completeFinish: "step is-active"
-      });
+        currentStep: 4,
+      })
     }
-  };
+  }
 
   onPrevAvatar = e => {
     this.setState({
-      show: "Contacts",
-      completeAvatar: "step",
-      completeContacts: "step is-active"
-    });
-  };
+      currentStep: 2,
+    })
+  }
 
   onChange = e => {
-    e.preventDefault();
+    e.preventDefault()
 
     this.setState({
-      [e.target.name]: e.target.value
-    });
-  };
+      [e.target.name]: e.target.value,
+    })
+  }
 
   show = e => {
-    if (this.state.show === "Contacts") {
+    if (this.state.currentStep === 2) {
       return (
         <Contacts
           email={this.state.email}
@@ -220,9 +206,9 @@ export default class App extends React.Component {
           onPrevContact={this.onPrevContact}
           onSubmitContact={this.onSubmitContact}
         />
-      );
+      )
     }
-    if (this.state.show === "Avatar") {
+    if (this.state.currentStep === 3) {
       return (
         <Avatar
           avatar={this.state.avatar}
@@ -232,9 +218,9 @@ export default class App extends React.Component {
           onSubmitAvatar={this.onSubmitAvatar}
           onPrevAvatar={this.onPrevAvatar}
         />
-      );
+      )
     }
-    if (this.state.show === "Finish") {
+    if (this.state.currentStep === 4) {
       return (
         <Finish
           avatar={this.state.avatar}
@@ -246,7 +232,7 @@ export default class App extends React.Component {
           city={this.state.city}
           onReset={this.onReset}
         />
-      );
+      )
     } else {
       return (
         <Basic
@@ -263,23 +249,33 @@ export default class App extends React.Component {
           errorGender={this.state.errorsBasic.gender}
           onSubmitBasic={this.onSubmitBasic}
         />
-      );
+      )
     }
-  };
+  }
+
+  showPassingSteps = stepName => {
+    console.log('current step is ', this.state.currentStep)
+    if (stepName < this.state.currentStep) {
+      return 'step is-completed'
+    }
+    if (stepName > this.state.currentStep) {
+      return 'step '
+    } else {
+      return 'step is-active'
+    }
+  }
 
   render() {
     return (
       <div className="form-container card">
         <form className="form card-body">
           <Stages
-            complete1={this.state.completeBasic}
-            complete2={this.state.completeContacts}
-            complete3={this.state.completeAvatar}
-            complete4={this.state.completeFinish}
+            currentStep={this.state.currentStep}
+            showPassingSteps={this.showPassingSteps}
           />
-          {this.show(this.state.show)}
+          {this.show(this.state.currentStep)}
         </form>
       </div>
-    );
+    )
   }
 }
