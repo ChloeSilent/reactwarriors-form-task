@@ -1,17 +1,16 @@
 import React, { Fragment } from 'react'
 
 const Avatar = props => {
-  const {
-    avatar,
-    firstName,
-    onChangeAvatar,
-    errorAvatar,
-    //onPrevAvatar,
-    //onSubmitAvatar,
-  } = props
+  const { values, errors } = props
+  const { onChangeAvatar } = props
   return (
     <Fragment>
-      <img className="mb-4" width="100%" src={avatar} alt={firstName} />
+      <img
+        className="mb-4"
+        width="100%"
+        src={values.avatar}
+        alt={values.firstName}
+      />
       <div className="mb-4">
         <div className="custom-file">
           <input
@@ -25,23 +24,10 @@ const Avatar = props => {
             Choose avatar
           </label>
         </div>
-        {{ errorAvatar } ? (
-          <div className="invalid-feedback">{errorAvatar}</div>
+        {errors.avatar ? (
+          <div className="invalid-feedback">{errors.avatar}</div>
         ) : null}
       </div>
-      {/*<div className="d-flex justify-content-center">*/}
-      {/*    <button type="button"*/}
-      {/*            className="btn btn-light mr-4"*/}
-      {/*            onClick={onPrevAvatar}*/}
-      {/*    >*/}
-      {/*        Previous*/}
-      {/*    </button>*/}
-      {/*    <button type="button"*/}
-      {/*            className="btn btn-secondary"*/}
-      {/*            onClick={onSubmitAvatar}>*/}
-      {/*        Next*/}
-      {/*    </button>*/}
-      {/*</div>*/}
     </Fragment>
   )
 }
