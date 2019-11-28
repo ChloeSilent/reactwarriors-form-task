@@ -12,6 +12,19 @@ export default class App extends React.Component {
   constructor() {
     super()
     this.state = {
+      values: {
+        firstName: '',
+        lastName: '',
+        password: '',
+        repeatPassword: '',
+        gender: 'male',
+        email: '',
+        mobile: '',
+        country: 'Ukraine',
+        city: '',
+        avatar:
+          'https://reactwarriors.github.io/reactwarriors-stage-2/static/media/default-avatar.59337bae.png',
+      },
       currentStep: 1,
       firstName: '',
       lastName: '',
@@ -62,6 +75,7 @@ export default class App extends React.Component {
     function getKeyByValue(object, value) {
       return Object.keys(object).find(key => object[key] === value)
     }
+
     return chosenCities.map(city => {
       let key = getKeyByValue(cities, city)
       return (
@@ -74,9 +88,13 @@ export default class App extends React.Component {
 
   onChangeAvatar = e => {
     const reader = new FileReader()
+
+    const values = this.state.values
+
     reader.onload = e => {
+      values.avatar = e.target.result
       this.setState({
-        avatar: e.target.result,
+        values,
       })
     }
     reader.readAsDataURL(e.target.files[0])
@@ -90,19 +108,19 @@ export default class App extends React.Component {
   onSubmitBasic = e => {
     e.preventDefault()
     const errors = {}
-    if (this.state.firstName.length <= 1) {
+    if (this.state.values.firstName.length <= 1) {
       errors.firstName = 'Must be 5 characters or more'
     }
-    if (this.state.lastName.length <= 1) {
+    if (this.state.values.lastName.length <= 1) {
       errors.lastName = 'Must be 5 characters or more'
     }
-    if (this.state.password.length <= 1) {
+    if (this.state.values.password.length <= 1) {
       errors.password = 'Must be 6 characters or more'
     }
-    if (this.state.repeatPassword !== this.state.password) {
+    if (this.state.values.repeatPassword !== this.state.values.password) {
       errors.repeatPassword = 'Must be equal password'
     }
-    if (!this.state.gender) {
+    if (!this.state.values.gender) {
       errors.repeatPassword = 'Required'
     }
 
@@ -122,16 +140,16 @@ export default class App extends React.Component {
     const errors = {}
     let regMail = /.+@.+\.[A-Za-z]+$/
     const regMobile = /^[(]?[0-9]{4}[)]?[-\s.]?[0-9]{3}[-/\s.]?[0-9]{4}$/
-    if (regMail.test(this.state.email) === false) {
+    if (regMail.test(this.state.values.email) === false) {
       errors.email = 'Invalid email address'
     }
-    if (regMobile.test(this.state.mobile) === false) {
+    if (regMobile.test(this.state.values.mobile) === false) {
       errors.mobile = 'Invalid mobile'
     }
-    if (!this.state.country) {
+    if (!this.state.values.country) {
       errors.country = 'Required'
     }
-    if (!this.state.city) {
+    if (!this.state.values.city) {
       errors.city = 'Required'
     }
 
@@ -158,7 +176,7 @@ export default class App extends React.Component {
     const errors = {}
 
     if (
-      this.state.avatar ===
+      this.state.values.avatar ===
       'https://reactwarriors.github.io/reactwarriors-stage-2/static/media/default-avatar.59337bae.png'
     ) {
       errors.avatar = 'Required'
@@ -181,11 +199,9 @@ export default class App extends React.Component {
   }
 
   onChange = e => {
-    e.preventDefault()
-
-    this.setState({
-      [e.target.name]: e.target.value,
-    })
+    const values = { ...this.state.values }
+    values[e.target.name] = e.target.value
+    this.setState({ values })
   }
 
   showPassingSteps = stepName => {
@@ -209,31 +225,31 @@ export default class App extends React.Component {
           />
           {this.state.currentStep === 1 && (
             <Basic
-              firstName={this.state.firstName}
+              firstName={this.state.values.firstName}
               onChange={this.onChange}
               errorFirstName={this.state.errorsBasic.firstName}
-              lastName={this.state.lastName}
+              lastName={this.state.values.lastName}
               errorLastName={this.state.errorsBasic.lastName}
-              password={this.state.password}
+              password={this.state.values.password}
               errorPassword={this.state.errorsBasic.password}
-              repeatPassword={this.state.repeatPassword}
+              repeatPassword={this.state.values.repeatPassword}
               errorRepeatPassword={this.state.errorsBasic.repeatPassword}
-              gender={this.state.gender}
+              gender={this.state.values.gender}
               errorGender={this.state.errorsBasic.gender}
               onSubmitBasic={this.onSubmitBasic}
             />
           )}
           {this.state.currentStep === 2 && (
             <Contacts
-              email={this.state.email}
+              email={this.state.values.email}
               onChange={this.onChange}
               errorEmail={this.state.errorsContacts.email}
-              mobile={this.state.mobile}
+              mobile={this.state.values.mobile}
               errorMobile={this.state.errorsContacts.mobile}
-              country={this.state.country}
+              country={this.state.values.country}
               getOptionsItems={this.getOptionsItems}
               errorCountry={this.state.errorsContacts.country}
-              city={this.state.city}
+              city={this.state.values.city}
               errorCity={this.state.errorsContacts.city}
               getOptionsCities={this.getOptionsCities}
               onPrevContact={this.onPrevContact}
@@ -242,8 +258,8 @@ export default class App extends React.Component {
           )}
           {this.state.currentStep === 3 && (
             <Avatar
-              avatar={this.state.avatar}
-              firstName={this.state.firstName}
+              avatar={this.state.values.avatar}
+              firstName={this.state.values.firstName}
               onChangeAvatar={this.onChangeAvatar}
               errorAvatar={this.state.errorsAvatar.avatar}
               onSubmitAvatar={this.onSubmitAvatar}
@@ -252,13 +268,13 @@ export default class App extends React.Component {
           )}
           {this.state.currentStep === 4 && (
             <Finish
-              avatar={this.state.avatar}
-              firstName={this.state.firstName}
-              lastName={this.state.lastName}
-              email={this.state.email}
-              mobile={this.state.mobile}
-              country={this.state.country}
-              city={this.state.city}
+              avatar={this.state.values.avatar}
+              firstName={this.state.values.firstName}
+              lastName={this.state.values.lastName}
+              email={this.state.values.email}
+              mobile={this.state.values.mobile}
+              country={this.state.values.country}
+              city={this.state.values.city}
               onReset={this.onReset}
             />
           )}
