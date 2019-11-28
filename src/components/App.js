@@ -188,73 +188,7 @@ export default class App extends React.Component {
     })
   }
 
-  show = e => {
-    if (this.state.currentStep === 2) {
-      return (
-        <Contacts
-          email={this.state.email}
-          onChange={this.onChange}
-          errorEmail={this.state.errorsContacts.email}
-          mobile={this.state.mobile}
-          errorMobile={this.state.errorsContacts.mobile}
-          country={this.state.country}
-          getOptionsItems={this.getOptionsItems}
-          errorCountry={this.state.errorsContacts.country}
-          city={this.state.city}
-          errorCity={this.state.errorsContacts.city}
-          getOptionsCities={this.getOptionsCities}
-          onPrevContact={this.onPrevContact}
-          onSubmitContact={this.onSubmitContact}
-        />
-      )
-    }
-    if (this.state.currentStep === 3) {
-      return (
-        <Avatar
-          avatar={this.state.avatar}
-          firstName={this.state.firstName}
-          onChangeAvatar={this.onChangeAvatar}
-          errorAvatar={this.state.errorsAvatar.avatar}
-          onSubmitAvatar={this.onSubmitAvatar}
-          onPrevAvatar={this.onPrevAvatar}
-        />
-      )
-    }
-    if (this.state.currentStep === 4) {
-      return (
-        <Finish
-          avatar={this.state.avatar}
-          firstName={this.state.firstName}
-          lastName={this.state.lastName}
-          email={this.state.email}
-          mobile={this.state.mobile}
-          country={this.state.country}
-          city={this.state.city}
-          onReset={this.onReset}
-        />
-      )
-    } else {
-      return (
-        <Basic
-          firstName={this.state.firstName}
-          onChange={this.onChange}
-          errorFirstName={this.state.errorsBasic.firstName}
-          lastName={this.state.lastName}
-          errorLastName={this.state.errorsBasic.lastName}
-          password={this.state.password}
-          errorPassword={this.state.errorsBasic.password}
-          repeatPassword={this.state.repeatPassword}
-          errorRepeatPassword={this.state.errorsBasic.repeatPassword}
-          gender={this.state.gender}
-          errorGender={this.state.errorsBasic.gender}
-          onSubmitBasic={this.onSubmitBasic}
-        />
-      )
-    }
-  }
-
   showPassingSteps = stepName => {
-    console.log('current step is ', this.state.currentStep)
     if (stepName < this.state.currentStep) {
       return 'step is-completed'
     }
@@ -273,7 +207,61 @@ export default class App extends React.Component {
             currentStep={this.state.currentStep}
             showPassingSteps={this.showPassingSteps}
           />
-          {this.show(this.state.currentStep)}
+          {this.state.currentStep === 1 && (
+            <Basic
+              firstName={this.state.firstName}
+              onChange={this.onChange}
+              errorFirstName={this.state.errorsBasic.firstName}
+              lastName={this.state.lastName}
+              errorLastName={this.state.errorsBasic.lastName}
+              password={this.state.password}
+              errorPassword={this.state.errorsBasic.password}
+              repeatPassword={this.state.repeatPassword}
+              errorRepeatPassword={this.state.errorsBasic.repeatPassword}
+              gender={this.state.gender}
+              errorGender={this.state.errorsBasic.gender}
+              onSubmitBasic={this.onSubmitBasic}
+            />
+          )}
+          {this.state.currentStep === 2 && (
+            <Contacts
+              email={this.state.email}
+              onChange={this.onChange}
+              errorEmail={this.state.errorsContacts.email}
+              mobile={this.state.mobile}
+              errorMobile={this.state.errorsContacts.mobile}
+              country={this.state.country}
+              getOptionsItems={this.getOptionsItems}
+              errorCountry={this.state.errorsContacts.country}
+              city={this.state.city}
+              errorCity={this.state.errorsContacts.city}
+              getOptionsCities={this.getOptionsCities}
+              onPrevContact={this.onPrevContact}
+              onSubmitContact={this.onSubmitContact}
+            />
+          )}
+          {this.state.currentStep === 3 && (
+            <Avatar
+              avatar={this.state.avatar}
+              firstName={this.state.firstName}
+              onChangeAvatar={this.onChangeAvatar}
+              errorAvatar={this.state.errorsAvatar.avatar}
+              onSubmitAvatar={this.onSubmitAvatar}
+              onPrevAvatar={this.onPrevAvatar}
+            />
+          )}
+          {this.state.currentStep === 4 && (
+            <Finish
+              avatar={this.state.avatar}
+              firstName={this.state.firstName}
+              lastName={this.state.lastName}
+              email={this.state.email}
+              mobile={this.state.mobile}
+              country={this.state.country}
+              city={this.state.city}
+              onReset={this.onReset}
+            />
+          )}
         </form>
       </div>
     )
