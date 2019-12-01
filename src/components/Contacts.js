@@ -1,43 +1,66 @@
-import React, { Fragment } from 'react'
+import React from 'react'
+import Field from './Field'
 import countries from '../data/countries'
+import cities from '../data/cities'
 
 const Contacts = props => {
-  const { values, errors } = props
+  const { values, errors, onChange } = props
 
-  const { onChange } = props
+  const getOptionsCountries = items => {
+    return items.map(item => {
+      return (
+        <option key={item.id} value={item.id}>
+          {item.name}
+        </option>
+      )
+    })
+  }
+
+  const getOptionsCities = country => {
+    if (country) {
+      let list = []
+      for (let key in cities) {
+        if (cities[key].country === parseInt(country)) {
+          list.push(cities[key])
+        }
+      }
+
+      function getKeyByValue(object, value) {
+        return Object.keys(object).find(key => object[key] === value)
+      }
+      return list.map(city => {
+        let key = getKeyByValue(cities, city)
+        return (
+          <option key={key} value={key}>
+            {city.name}
+          </option>
+        )
+      })
+    } else {
+      return <option key="0">select city</option>
+    }
+  }
+
   return (
-    <Fragment>
-      <div className="form-group">
-        <label htmlFor="email">Email</label>
-        <input
-          type="text"
-          className={errors.email ? 'form-control invalid' : 'form-control'}
-          id="email"
-          placeholder="Enter email"
-          name="email"
-          value={values.email}
-          onChange={props.onChange}
-        />
-        {errors.email ? (
-          <div className="invalid-feedback">{errors.email}</div>
-        ) : null}
-      </div>
-      <div className="form-group">
-        <label htmlFor="mobile">Mobile</label>
-        <input
-          type="tel"
-          className={errors.mobile ? 'form-control invalid' : 'form-control'}
-          id="mobile"
-          placeholder="Enter mobile"
-          name="mobile"
-          value={values.mobile}
-          onChange={props.onChange}
-        />
-        {errors.mobile ? (
-          <div className="invalid-feedback">{errors.mobile}</div>
-        ) : null}
-      </div>
-
+    <>
+      <Field
+        label="Email"
+        type="text"
+        error={errors.email}
+        placeholder="Enter email"
+        name="email"
+        value={values.email}
+        onChange={onChange}
+      />
+      <Field
+        label="Mobile"
+        type="tel"
+        error={errors.mobile}
+        placeholder="Enter mobile"
+        name="mobile"
+        value={values.mobile}
+        onChange={onChange}
+      />
       <div className="form-group">
         <label htmlFor="country">select country</label>
         <select
@@ -45,9 +68,9 @@ const Contacts = props => {
           id="country"
           value={values.country}
           name="country"
-          onChange={props.onChange}
+          onChange={onChange}
         >
-          {props.getOptionsItems(countries)}
+          {getOptionsCountries(countries)}
         </select>
         {errors.country ? (
           <div className="invalid-feedback">{errors.country}</div>
@@ -61,15 +84,15 @@ const Contacts = props => {
           id="city"
           value={values.city}
           name="city"
-          onChange={props.onChange}
+          onChange={onChange}
         >
-          {props.getOptionsCities(values.country)}
+          {getOptionsCities(values.country)}
         </select>
         {errors.city ? (
           <div className="invalid-feedback">{errors.city}</div>
         ) : null}
       </div>
-    </Fragment>
+    </>
   )
 }
 

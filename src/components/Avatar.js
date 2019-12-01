@@ -1,15 +1,32 @@
-import React, { Fragment } from 'react'
+import React from 'react'
+
+const defaultAvatar =
+  'https://reactwarriors.github.io/reactwarriors-stage-2/static/media/default-avatar.59337bae.png'
 
 const Avatar = props => {
-  const { values, errors } = props
-  const { onChangeAvatar } = props
+  const { values, errors, onChange } = props
+
+  const onChangeAvatar = event => {
+    const reader = new FileReader()
+
+    reader.onload = event => {
+      onChange({
+        target: {
+          name: 'avatar',
+          value: event.target.result,
+        },
+      })
+    }
+    reader.readAsDataURL(event.target.files[0])
+  }
+
   return (
-    <Fragment>
+    <>
       <img
         className="mb-4"
         width="100%"
-        src={values.avatar}
-        alt={values.firstName}
+        src={values.avatar || defaultAvatar}
+        alt="avatar"
       />
       <div className="mb-4">
         <div className="custom-file">
@@ -28,7 +45,7 @@ const Avatar = props => {
           <div className="invalid-feedback">{errors.avatar}</div>
         ) : null}
       </div>
-    </Fragment>
+    </>
   )
 }
 

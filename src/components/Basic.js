@@ -1,78 +1,46 @@
-import React, { Fragment } from 'react'
-
+import React from 'react'
+import Field from './Field'
 const Basic = props => {
-  const { values, errors } = props
-
-  const { onChange } = props
+  const { values, errors, onChange } = props
 
   return (
-    <Fragment>
-      <div className="form-group">
-        <label htmlFor="firstName">First name</label>
-        <input
-          type="text"
-          className={errors.firstName ? 'form-control invalid' : 'form-control'}
-          placeholder="Enter first name"
-          name="firstName"
-          value={values.firstName}
-          id="firstName"
-          onChange={onChange}
-          autoComplete="username"
-        />
-        {errors.firstName ? (
-          <div className="invalid-feedback">{errors.firstName}</div>
-        ) : null}
-      </div>
-      <div className="form-group">
-        <label htmlFor="lastName">Last name</label>
-        <input
-          type="text"
-          className={errors.lastName ? 'form-control invalid' : 'form-control'}
-          placeholder="Enter last name"
-          name="lastName"
-          id="lastName"
-          value={values.lastName}
-          autoComplete="username"
-          onChange={onChange}
-        />
-        {errors.lastName ? (
-          <div className="invalid-feedback">{errors.lastName}</div>
-        ) : null}
-      </div>
-      <div className="form-group">
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          className={errors.password ? 'form-control invalid' : 'form-control'}
-          placeholder="Enter password"
-          name="password"
-          id="password"
-          value={values.password}
-          autoComplete="new-password"
-          onChange={onChange}
-        />
-        {errors.password ? (
-          <div className="invalid-feedback">{errors.password}</div>
-        ) : null}
-      </div>
-      <div className="form-group">
-        <label htmlFor="repeatPassword">Repeat password</label>
-        <input
-          type="password"
-          className={
-            errors.repeatPassword ? 'form-control invalid' : 'form-control'
-          }
-          placeholder="Enter repeat password"
-          name="repeatPassword"
-          id="repeatPassword"
-          value={values.repeatPassword}
-          autoComplete="new-password"
-          onChange={onChange}
-        />
-        {errors.repeatPassword ? (
-          <div className="invalid-feedback">{errors.repeatPassword}</div>
-        ) : null}
-      </div>
+    <>
+      <Field
+        label="First name"
+        type="text"
+        error={errors.firstName}
+        placeholder="Enter first name"
+        name="firstName"
+        value={values.firstName}
+        onChange={onChange}
+      />
+      <Field
+        label="Last name"
+        type="text"
+        error={errors.lastName}
+        placeholder="Enter last name"
+        name="lastName"
+        value={values.lastName}
+        onChange={onChange}
+      />
+      <Field
+        label="Password"
+        type="password"
+        error={errors.password}
+        placeholder="Enter password"
+        name="password"
+        value={values.password}
+        onChange={onChange}
+      />
+      <Field
+        label="Repeat password"
+        type="password"
+        error={errors.repeatPassword}
+        placeholder="Enter repeat password"
+        name="repeatPassword"
+        value={values.repeatPassword}
+        onChange={onChange}
+      />
       <fieldset className="form-group">
         <div>Gender</div>
         <div className="form-check">
@@ -96,7 +64,7 @@ const Basic = props => {
             id="female"
             name="gender"
             value="female"
-            onChange={props.onChange}
+            onChange={onChange}
             checked={values.gender === 'female'}
           />
           <label className="form-check-label" htmlFor="female">
@@ -107,7 +75,7 @@ const Basic = props => {
           <div className="invalid-feedback">{errors.gender}</div>
         ) : null}
       </fieldset>
-    </Fragment>
+    </>
   )
 }
 

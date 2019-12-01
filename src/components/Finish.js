@@ -1,4 +1,6 @@
-import React, { Fragment } from 'react'
+import React from 'react'
+import countries from '../data/countries'
+import cities from '../data/cities'
 
 const Finish = props => {
   const {
@@ -10,8 +12,9 @@ const Finish = props => {
     country,
     city,
   } = props.values
+
   return (
-    <Fragment>
+    <>
       <div className="container-fluid">
         <div className="row mb-4">
           <div className="col-4">
@@ -32,12 +35,14 @@ const Finish = props => {
               <strong>Mobile:</strong> {mobile}
             </p>
             <p>
-              <strong>Location:</strong> {country}, {city}
+              <strong>Location:</strong>{' '}
+              {countries.find(item => item.id === parseInt(country)).name},{' '}
+              {cities[city].name}
             </p>
           </div>
         </div>
       </div>
-    </Fragment>
+    </>
   )
 }
 
