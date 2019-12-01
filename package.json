@@ -12,10 +12,15 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test --env=jsdom --watchAll=false --coverage",
     "eject": "react-scripts eject",
-    "precommit": "lint-staged",
     "eslint": "node_modules/.bin/eslint src/"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test",
+      "commitmsg": "commitlint -E GIT_PARAMS"
+    }
   },
   "browserslist": [
     ">0.2%",
@@ -35,11 +40,5 @@
       "prettier --write",
       "git add"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm test",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
   }
 }
