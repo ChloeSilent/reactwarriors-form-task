@@ -5,25 +5,23 @@ const Navigation = props => {
 
   if (currentStep < 4) {
     return (
-      <>
-        <div className="d-flex justify-content-center">
-          <button
-            type="button"
-            className="btn btn-light mr-4"
-            disabled={currentStep === 1}
-            onClick={onPreviousStep}
-          >
-            Previous
-          </button>
-          <button
-            type="button"
-            className="btn btn-secondary"
-            onClick={onNextStep}
-          >
-            Next
-          </button>
-        </div>
-      </>
+      <div className="d-flex justify-content-center">
+        <button
+          type="button"
+          className="btn btn-light mr-4"
+          disabled={currentStep === 1}
+          onClick={onPreviousStep}
+        >
+          Previous
+        </button>
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={onNextStep}
+        >
+          Next
+        </button>
+      </div>
     )
   }
 
