@@ -11,7 +11,7 @@ import Navigation from './Navigation'
 const regularExpressionEmail = /.+@.+\.[A-Za-z]+$/
 const regularExpressionMobile = /^[(]?[0-9]{4}[)]?[-\s.]?[0-9]{3}[-/\s.]?[0-9]{4}$/
 const initialState = {
-  currentStep: 1,
+  currentStep: 2,
   values: {
     firstName: '',
     lastName: '',

@@ -7,6 +7,8 @@ const Contacts = props => {
   const { values, errors, onChange } = props
 
   const getOptionsCountries = items => {
+    //console.log('land', this.state.country)
+
     return items.map(item => {
       return (
         <option key={item.id} value={item.id}>
@@ -70,6 +72,7 @@ const Contacts = props => {
           name="country"
           onChange={onChange}
         >
+          <option key="0">select country</option>
           {getOptionsCountries(countries)}
         </select>
         {errors.country ? (
