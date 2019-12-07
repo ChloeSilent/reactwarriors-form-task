@@ -6,41 +6,30 @@ import cities from '../data/cities'
 const Contacts = props => {
   const { values, errors, onChange } = props
 
-  const getOptionsCountries = items => {
-    //console.log('land', this.state.country)
-
-    return items.map(item => {
-      return (
-        <option key={item.id} value={item.id}>
-          {item.name}
-        </option>
-      )
-    })
+  const getOptions = list => {
+    return list.map(item => (
+      <option key={item.id} value={item.id}>
+        {item.name}
+      </option>
+    ))
   }
 
   const getOptionsCities = country => {
-    if (country) {
-      let list = []
-      for (let key in cities) {
-        if (cities[key].country === parseInt(country)) {
-          list.push(cities[key])
-        }
+    let list = []
+    for (let key in cities) {
+      if (cities[key].country === Number(country)) {
+        list.push({
+          id: key,
+          name: cities[key].name,
+        })
       }
-
-      function getKeyByValue(object, value) {
-        return Object.keys(object).find(key => object[key] === value)
-      }
-      return list.map(city => {
-        let key = getKeyByValue(cities, city)
-        return (
-          <option key={key} value={key}>
-            {city.name}
-          </option>
-        )
-      })
-    } else {
-      return <option key="0">select city</option>
     }
+    return [
+      <option key="0" value="">
+        select city
+      </option>,
+      ...getOptions(list),
+    ]
   }
 
   return (
@@ -72,8 +61,10 @@ const Contacts = props => {
           name="country"
           onChange={onChange}
         >
-          <option key="0">select country</option>
-          {getOptionsCountries(countries)}
+          <option key="0" value="">
+            select country
+          </option>
+          {getOptions(countries)}
         </select>
         {errors.country ? (
           <div className="invalid-feedback">{errors.country}</div>

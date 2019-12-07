@@ -11,7 +11,7 @@ import Navigation from './Navigation'
 const regularExpressionEmail = /.+@.+\.[A-Za-z]+$/
 const regularExpressionMobile = /^[(]?[0-9]{4}[)]?[-\s.]?[0-9]{3}[-/\s.]?[0-9]{4}$/
 const initialState = {
-  currentStep: 1,
+  currentStep: 2,
   values: {
     firstName: '',
     lastName: '',
@@ -111,6 +111,9 @@ export default class App extends React.Component {
   onChange = event => {
     const values = { ...this.state.values }
     values[event.target.name] = event.target.value
+    if (event.target.name === 'city') {
+      values.city = ''
+    }
     this.setState({ values })
   }
 

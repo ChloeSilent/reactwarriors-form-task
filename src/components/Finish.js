@@ -36,7 +36,7 @@ const Finish = props => {
             </p>
             <p>
               <strong>Location:</strong>{' '}
-              {countries.find(item => item.id === parseInt(country)).name},{' '}
+              {countries.find(item => item.id === Number(country)).name},{' '}
               {cities[city].name}
             </p>
           </div>
