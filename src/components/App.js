@@ -103,11 +103,6 @@ export default class App extends React.Component {
     }))
   }
 
-  onReset = event => {
-    event.preventDefault()
-    this.setState({ ...initialState })
-  }
-
   onChange = event => {
     const values = { ...this.state.values }
     values[event.target.name] = event.target.value
@@ -115,6 +110,11 @@ export default class App extends React.Component {
       values.city = ''
     }
     this.setState({ values })
+  }
+
+  onReset = event => {
+    event.preventDefault()
+    this.setState({ ...initialState })
   }
 
   render() {
